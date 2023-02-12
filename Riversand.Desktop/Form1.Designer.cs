@@ -34,6 +34,8 @@
             this.label_EndDate = new System.Windows.Forms.Label();
             this.dateTimePicker_StartDate = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker_EndDate = new System.Windows.Forms.DateTimePicker();
+            this.textBox_Output = new System.Windows.Forms.TextBox();
+            this.button_Search = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label_SKU
@@ -87,11 +89,32 @@
             this.dateTimePicker_EndDate.Size = new System.Drawing.Size(250, 27);
             this.dateTimePicker_EndDate.TabIndex = 5;
             // 
+            // textBox_Output
+            // 
+            this.textBox_Output.Location = new System.Drawing.Point(12, 162);
+            this.textBox_Output.Multiline = true;
+            this.textBox_Output.Name = "textBox_Output";
+            this.textBox_Output.ReadOnly = true;
+            this.textBox_Output.Size = new System.Drawing.Size(776, 276);
+            this.textBox_Output.TabIndex = 6;
+            // 
+            // button_Search
+            // 
+            this.button_Search.Location = new System.Drawing.Point(694, 127);
+            this.button_Search.Name = "button_Search";
+            this.button_Search.Size = new System.Drawing.Size(94, 29);
+            this.button_Search.TabIndex = 7;
+            this.button_Search.Text = "Search";
+            this.button_Search.UseVisualStyleBackColor = true;
+            this.button_Search.Click += new System.EventHandler(this.button_Search_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button_Search);
+            this.Controls.Add(this.textBox_Output);
             this.Controls.Add(this.dateTimePicker_EndDate);
             this.Controls.Add(this.dateTimePicker_StartDate);
             this.Controls.Add(this.label_EndDate);
@@ -113,5 +136,7 @@
         private Label label_EndDate;
         private DateTimePicker dateTimePicker_StartDate;
         private DateTimePicker dateTimePicker_EndDate;
+        private TextBox textBox_Output;
+        private Button button_Search;
     }
 }
