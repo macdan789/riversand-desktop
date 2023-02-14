@@ -1,4 +1,5 @@
-﻿using Renci.SshNet;
+﻿using Newtonsoft.Json.Linq;
+using Renci.SshNet;
 using Renci.SshNet.Sftp;
 
 namespace Riversand.Common.SFTP;
@@ -15,8 +16,10 @@ public class SftpManager
         _client = new SftpClient(SftpConfiguration.Host, SftpConfiguration.Username, SftpConfiguration.Password);
     }
 
+
     private Task<bool> IsDirectoryExist(string directory)
         => Task.FromResult(_client.Exists(directory));
+
 
     private Task DownloadFileAsync(string source, string destination)
     {
@@ -27,10 +30,13 @@ public class SftpManager
         });
     }
 
-    private string GetDestFileName(SftpFile file, string productId)
-        => SftpConfiguration.DownloadDir + string.Format(FILE_MASK, file.LastWriteTime.ToString("MM-dd-yyyy-HH-mm-ss"), productId.ToUpper(), file.Name);
+
+    private static string GetDestFileName(SftpFile file, string productId)
+        => SftpConfiguration.DownloadDir + string.Format(FILE_MASK, file.LastWriteTime.ToString("MM-dd-yyyy-HH-mm-ss"), productId, file.Name);
+
 
     private void Dispose() => _client?.Dispose();
+
 
     public async Task<List<string>> GetFiles(string productId, DateTime start, DateTime end)
     {
@@ -51,7 +57,13 @@ public class SftpManager
                 if (file.Name.EndsWith(JSON, StringComparison.CurrentCultureIgnoreCase))
                 {
                     string fileContent = _client.ReadAllText(file.FullName);
-                    if (fileContent.Contains(productId, StringComparison.CurrentCultureIgnoreCase))
+                    var entity = JObject.Parse(fileContent);
+
+                    string name = entity["name"].ToString();
+                    string sku = entity["data"]["attributes"]["sku"]["values"].FirstOrDefault()["value"].ToString();
+
+                    if (string.Equals(name, productId, StringComparison.CurrentCultureIgnoreCase)
+                        || string.Equals(sku, productId, StringComparison.CurrentCultureIgnoreCase))
                     {
                         string destFileName = GetDestFileName(file, productId);
                         await DownloadFileAsync(file.FullName, destFileName);
