@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace Riversand.Common;
+namespace Riversand.Common.SFTP;
 
 public static class SftpConfiguration
 {

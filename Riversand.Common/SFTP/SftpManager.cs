@@ -1,7 +1,7 @@
 ﻿using Renci.SshNet;
 using Renci.SshNet.Sftp;
 
-namespace Riversand.Common;
+namespace Riversand.Common.SFTP;
 
 public class SftpManager
 {
@@ -11,7 +11,7 @@ public class SftpManager
     private readonly SftpClient _client;
 
     public SftpManager()
-	{
+    {
         _client = new SftpClient(SftpConfiguration.Host, SftpConfiguration.Username, SftpConfiguration.Password);
     }
 

@@ -1,4 +1,4 @@
-using Riversand.Common;
+using Riversand.Common.SFTP;
 
 namespace Riversand.Desktop
 {
