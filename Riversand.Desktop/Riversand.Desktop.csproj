@@ -8,4 +8,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Riversand.Common\Riversand.Common.csproj" />
+  </ItemGroup>
+
 </Project>

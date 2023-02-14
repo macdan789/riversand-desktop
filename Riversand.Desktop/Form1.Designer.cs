@@ -34,8 +34,9 @@
             this.label_EndDate = new System.Windows.Forms.Label();
             this.dateTimePicker_StartDate = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker_EndDate = new System.Windows.Forms.DateTimePicker();
-            this.textBox_Output = new System.Windows.Forms.TextBox();
             this.button_Search = new System.Windows.Forms.Button();
+            this.listBox_Output = new System.Windows.Forms.ListBox();
+            this.label_WorkDir = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label_SKU
@@ -89,15 +90,6 @@
             this.dateTimePicker_EndDate.Size = new System.Drawing.Size(250, 27);
             this.dateTimePicker_EndDate.TabIndex = 5;
             // 
-            // textBox_Output
-            // 
-            this.textBox_Output.Location = new System.Drawing.Point(12, 162);
-            this.textBox_Output.Multiline = true;
-            this.textBox_Output.Name = "textBox_Output";
-            this.textBox_Output.ReadOnly = true;
-            this.textBox_Output.Size = new System.Drawing.Size(776, 276);
-            this.textBox_Output.TabIndex = 6;
-            // 
             // button_Search
             // 
             this.button_Search.Location = new System.Drawing.Point(694, 127);
@@ -108,13 +100,32 @@
             this.button_Search.UseVisualStyleBackColor = true;
             this.button_Search.Click += new System.EventHandler(this.button_Search_Click);
             // 
+            // listBox_Output
+            // 
+            this.listBox_Output.FormattingEnabled = true;
+            this.listBox_Output.ItemHeight = 20;
+            this.listBox_Output.Location = new System.Drawing.Point(12, 167);
+            this.listBox_Output.Name = "listBox_Output";
+            this.listBox_Output.Size = new System.Drawing.Size(776, 264);
+            this.listBox_Output.TabIndex = 8;
+            // 
+            // label_WorkDir
+            // 
+            this.label_WorkDir.Location = new System.Drawing.Point(12, 438);
+            this.label_WorkDir.Name = "label_WorkDir";
+            this.label_WorkDir.Size = new System.Drawing.Size(776, 25);
+            this.label_WorkDir.TabIndex = 9;
+            this.label_WorkDir.Text = "label1";
+            this.label_WorkDir.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 471);
+            this.Controls.Add(this.label_WorkDir);
+            this.Controls.Add(this.listBox_Output);
             this.Controls.Add(this.button_Search);
-            this.Controls.Add(this.textBox_Output);
             this.Controls.Add(this.dateTimePicker_EndDate);
             this.Controls.Add(this.dateTimePicker_StartDate);
             this.Controls.Add(this.label_EndDate);
@@ -122,6 +133,7 @@
             this.Controls.Add(this.textBox_SKU);
             this.Controls.Add(this.label_SKU);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Application";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -136,7 +148,8 @@
         private Label label_EndDate;
         private DateTimePicker dateTimePicker_StartDate;
         private DateTimePicker dateTimePicker_EndDate;
-        private TextBox textBox_Output;
         private Button button_Search;
+        private ListBox listBox_Output;
+        private Label label_WorkDir;
     }
 }
