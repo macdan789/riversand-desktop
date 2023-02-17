@@ -1,4 +1,5 @@
 using Riversand.Common.SFTP;
+using System.Text.RegularExpressions;
 
 namespace Riversand.Desktop;
 
@@ -23,6 +24,13 @@ public partial class Form1 : Form
                 SftpManager manager = new();
 
                 string productId = textBox_SKU.Text.ToUpper();
+
+                if (!Regex.IsMatch(productId, @"^[a-zA-Z0-9]+$"))
+                {
+                    MessageBox.Show("Wrong Product ID", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
                 DateTime start = dateTimePicker_StartDate.Value;
                 DateTime end = dateTimePicker_EndDate.Value;
 
