@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json.Linq;
 using Renci.SshNet;
 using Renci.SshNet.Sftp;
+using Riversand.Common.Configurations;
 using Riversand.Common.Constatns;
+using Riversand.Common.SFTP.Abstract;
 
 namespace Riversand.Common.SFTP;
 
-public class SftpManager : IDisposable
+public class SftpManager : ISftpManager
 {
     private readonly SftpClient _client;
 
@@ -56,7 +58,7 @@ public class SftpManager : IDisposable
                     var entity = JObject.Parse(fileContent);
 
                     string name = entity["name"]!.ToString();
-                    string sku  = entity["data"]!["attributes"]!["sku"]!["values"]!.First()["value"]!.ToString();
+                    string sku = entity["data"]!["attributes"]!["sku"]!["values"]!.First()["value"]!.ToString();
 
                     if (string.Equals(name, productId, StringComparison.CurrentCultureIgnoreCase)
                         || string.Equals(sku, productId, StringComparison.CurrentCultureIgnoreCase))
