@@ -24,14 +24,6 @@ public class SftpManager : ISftpManager
         => Task.FromResult(_client.Exists(directory));
 
 
-    private Task DownloadFileAsync(string source, string destination)
-        => Task.Run(() =>
-        {
-            using var destFile = File.OpenWrite(destination);
-            _client.DownloadFile(source, destFile);
-        });
-
-
     private static string GetDestFileName(SftpFile file, string productId)
         => SftpConfiguration.DownloadDir + string.Format(Constants.FILE_MASK, file.LastWriteTime.ToString(Constants.DATE_TIME_FORMAT), productId, file.Name);
 
@@ -66,7 +58,9 @@ public class SftpManager : ISftpManager
                         || string.Equals(sku, productId, StringComparison.CurrentCultureIgnoreCase))
                     {
                         string destFileName = GetDestFileName(file, productId);
-                        await DownloadFileAsync(file.FullName, destFileName);
+                        
+                        await File.WriteAllTextAsync(destFileName, fileContent);
+
                         downloadedFiles.Add(Path.GetFileName(destFileName));
                     }
                 }

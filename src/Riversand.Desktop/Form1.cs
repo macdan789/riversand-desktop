@@ -12,7 +12,7 @@ public partial class Form1 : Form
     public Form1(ISftpManager manager)
     {
         InitializeComponent();
-        label_WorkDir.Text = $"Founded files are located here: {SftpConfiguration.DownloadDir}";
+        label_WorkDir.Text = $"Download folder: {SftpConfiguration.DownloadDir}";
         _manager = manager;
     }
 
