@@ -14,6 +14,9 @@ public class SftpManager : ISftpManager
     public SftpManager()
     {
         _client ??= new SftpClient(SftpConfiguration.Host, SftpConfiguration.Username, SftpConfiguration.Password);
+
+        if (!_client.IsConnected)
+            _client.Connect();
     }
 
 
@@ -41,7 +44,6 @@ public class SftpManager : ISftpManager
         try
         {
             List<string> downloadedFiles = new();
-            _client.Connect();
 
             if (!await IsDirectoryExist(SftpConfiguration.WorkingDir))
                 return downloadedFiles;
