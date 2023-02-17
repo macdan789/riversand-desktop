@@ -1,19 +1,17 @@
 ﻿using Newtonsoft.Json.Linq;
 using Renci.SshNet;
 using Renci.SshNet.Sftp;
+using Riversand.Common.Constatns;
 
 namespace Riversand.Common.SFTP;
 
-public class SftpManager
+public class SftpManager : IDisposable
 {
-    private const string JSON = ".json";
-    private const string FILE_MASK = "{0}_{1}_{2}";
-
     private readonly SftpClient _client;
 
     public SftpManager()
     {
-        _client = new SftpClient(SftpConfiguration.Host, SftpConfiguration.Username, SftpConfiguration.Password);
+        _client ??= new SftpClient(SftpConfiguration.Host, SftpConfiguration.Username, SftpConfiguration.Password);
     }
 
 
@@ -22,20 +20,18 @@ public class SftpManager
 
 
     private Task DownloadFileAsync(string source, string destination)
-    {
-        return Task.Run(() =>
+        => Task.Run(() =>
         {
             using var destFile = File.OpenWrite(destination);
             _client.DownloadFile(source, destFile);
         });
-    }
 
 
     private static string GetDestFileName(SftpFile file, string productId)
-        => SftpConfiguration.DownloadDir + string.Format(FILE_MASK, file.LastWriteTime.ToString("MM-dd-yyyy-HH-mm-ss"), productId, file.Name);
+        => SftpConfiguration.DownloadDir + string.Format(Constants.FILE_MASK, file.LastWriteTime.ToString(Constants.DATE_TIME_FORMAT), productId, file.Name);
 
 
-    private void Dispose() => _client?.Dispose();
+    public void Dispose() => _client?.Dispose();
 
 
     public async Task<List<string>> GetFiles(string productId, DateTime start, DateTime end)
@@ -54,13 +50,13 @@ public class SftpManager
 
             foreach (SftpFile file in files)
             {
-                if (file.Name.EndsWith(JSON, StringComparison.CurrentCultureIgnoreCase))
+                if (file.Name.EndsWith(Constants.JSON, StringComparison.CurrentCultureIgnoreCase))
                 {
                     string fileContent = _client.ReadAllText(file.FullName);
                     var entity = JObject.Parse(fileContent);
 
-                    string name = entity["name"].ToString();
-                    string sku = entity["data"]["attributes"]["sku"]["values"].FirstOrDefault()["value"].ToString();
+                    string name = entity["name"]!.ToString();
+                    string sku  = entity["data"]!["attributes"]!["sku"]!["values"]!.First()["value"]!.ToString();
 
                     if (string.Equals(name, productId, StringComparison.CurrentCultureIgnoreCase)
                         || string.Equals(sku, productId, StringComparison.CurrentCultureIgnoreCase))
@@ -76,12 +72,7 @@ public class SftpManager
         }
         catch (Exception)
         {
-
             throw;
-        }
-        finally
-        {
-            Dispose();
         }
     }
 }

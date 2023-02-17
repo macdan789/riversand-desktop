@@ -1,3 +1,4 @@
+using Riversand.Common.Constatns;
 using Riversand.Common.SFTP;
 using System.Text.RegularExpressions;
 
@@ -19,13 +20,13 @@ public partial class Form1 : Form
         }
         else
         {
+            SftpManager manager = new();
+
             try
             {
-                SftpManager manager = new();
-
                 string productId = textBox_SKU.Text.ToUpper();
 
-                if (!Regex.IsMatch(productId, @"^[a-zA-Z0-9]+$"))
+                if (!Regex.IsMatch(productId, Constants.PATTERN))
                 {
                     MessageBox.Show("Wrong Product ID", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
@@ -48,6 +49,10 @@ public partial class Form1 : Form
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            }
+            finally
+            {
+                manager.Dispose();
             }
         }
     }
