@@ -31,8 +31,8 @@ public partial class Form1 : Form
                     return;
                 }
 
-                DateTime start = dateTimePicker_StartDate.Value;
-                DateTime end = dateTimePicker_EndDate.Value;
+                DateTime start = dateTimePicker_StartDate.Value.Date + timePortionDateTimePicker_StartDate.Value.TimeOfDay;
+                DateTime end = dateTimePicker_EndDate.Value.Date + timePortionDateTimePicker_EndDate.Value.TimeOfDay;
 
                 List<string> downloadedFiles = await manager.GetFiles(productId, start, end);
 
